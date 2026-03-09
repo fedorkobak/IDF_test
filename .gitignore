@@ -1,2 +1,3 @@
 IDF.egg-info
 .env
+__pycache__

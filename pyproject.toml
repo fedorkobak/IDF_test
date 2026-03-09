@@ -2,5 +2,7 @@
 name = "IDF"
 version = "0.0.0"
 dependencies = [
-    "clickhouse-driver==0.2.10"
+    "python-dotenv==1.2.2",
+    "requests==2.32.5",
+    "clickhouse-connect==0.13.0"
 ]
