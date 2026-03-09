@@ -1,5 +1,8 @@
 services:
   click:
     image: clickhouse/clickhouse-server:26.2
+    environment:
+      - CLICKHOUSE_USER=${CLICKHOUSE_USER}
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
     ports:
       - 9000:9000
