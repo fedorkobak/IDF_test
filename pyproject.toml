@@ -1,0 +1,6 @@
+[project]
+name = "IDF"
+version = "0.0.0"
+dependencies = [
+    "clickhouse-driver==0.2.10"
+]

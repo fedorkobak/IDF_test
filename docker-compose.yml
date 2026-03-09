@@ -1,0 +1,5 @@
+services:
+  click:
+    image: clickhouse/clickhouse-server:26.2
+    ports:
+      - 9000:9000
