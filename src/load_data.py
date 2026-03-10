@@ -29,7 +29,7 @@ def ensure_raw_table() -> None:
     client.command(
         f"""
         CREATE TABLE IF NOT EXISTS {CLICKHOUSE_RAW_TABLE} (
-            raw_json String
+            raw_json JSON
         )
         ENGINE = MergeTree
         ORDER BY tuple()
@@ -47,7 +47,7 @@ def insert_raw(data: dict) -> None:
     ensure_raw_table()
     client.insert(
         CLICKHOUSE_RAW_TABLE,
-        [[str(data)]],
+        [[data]],
         column_names=["raw_json"],
     )
 
