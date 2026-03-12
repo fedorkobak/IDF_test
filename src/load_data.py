@@ -34,18 +34,6 @@ client = clickhouse_connect.get_client(
 )
 
 
-def ensure_raw_table() -> None:
-    client.command(
-        f"""
-        CREATE TABLE IF NOT EXISTS {CLICKHOUSE_RAW_TABLE} (
-            id UInt8,
-            raw_json JSON
-        )
-        ENGINE = ReplacingMergeTree
-        ORDER BY id
-        """
-    )
-
 
 def request() -> requests.Response:
     response = http_session.get(DATA_URL, timeout=30)
@@ -54,7 +42,6 @@ def request() -> requests.Response:
 
 
 def insert_raw(_id: int, data: dict) -> None:
-    ensure_raw_table()
     client.insert(
         CLICKHOUSE_RAW_TABLE,
         [[_id, data]],

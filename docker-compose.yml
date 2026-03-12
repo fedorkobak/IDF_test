@@ -1,6 +1,8 @@
 services:
   click:
     image: clickhouse/clickhouse-server:26.2
+    volumes:
+      - ./src/sql_scripts:/docker-entrypoint-initdb.d
     environment:
       - CLICKHOUSE_USER=${CLICKHOUSE_USER}
       - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
