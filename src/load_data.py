@@ -1,8 +1,10 @@
-import json
 import os
-from dotenv import load_dotenv
-import requests
 import clickhouse_connect
+from dotenv import load_dotenv
+
+import urllib3
+import requests
+import requests.adapters
 
 load_dotenv()
 
@@ -12,6 +14,13 @@ CLICKHOUSE_USER = os.environ.get("CLICKHOUSE_USER")
 CLICKHOUSE_PASSWORD = os.environ.get("CLICKHOUSE_PASSWORD")
 CLICKHOUSE_RAW_TABLE = "raw_api_responses"
 DATA_URL = "http://api.open-notify.org/astros.json"
+
+
+http_session = requests.Session()
+retries_atapter = requests.adapters.HTTPAdapter(
+    max_retries=urllib3.Retry(total=5, status_forcelist=[429, 500, 502, 503, 504])
+)
+http_session.mount("http://", retries_atapter)
 
 
 if not (CLICKHOUSE_PASSWORD and CLICKHOUSE_USER):
@@ -31,14 +40,14 @@ def ensure_raw_table() -> None:
         CREATE TABLE IF NOT EXISTS {CLICKHOUSE_RAW_TABLE} (
             raw_json JSON
         )
-        ENGINE = MergeTree
+        ENGINE = ReplacingMergeTree
         ORDER BY tuple()
         """
     )
 
 
 def request() -> requests.Response:
-    response = requests.get(DATA_URL, timeout=30)
+    response = http_session.get(DATA_URL, timeout=30)
     response.raise_for_status()
     return response
 
