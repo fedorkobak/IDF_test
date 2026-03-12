@@ -38,10 +38,11 @@ def ensure_raw_table() -> None:
     client.command(
         f"""
         CREATE TABLE IF NOT EXISTS {CLICKHOUSE_RAW_TABLE} (
+            id UInt8,
             raw_json JSON
         )
         ENGINE = ReplacingMergeTree
-        ORDER BY tuple()
+        ORDER BY id
         """
     )
 
@@ -52,17 +53,18 @@ def request() -> requests.Response:
     return response
 
 
-def insert_raw(data: dict) -> None:
+def insert_raw(_id: int, data: dict) -> None:
     ensure_raw_table()
     client.insert(
         CLICKHOUSE_RAW_TABLE,
-        [[data]],
-        column_names=["raw_json"],
+        [[_id, data]],
+        column_names=["id", "raw_json"],
     )
 
 
 if __name__ == "__main__":
     response = request()
     data = response.json()
-    for row in data["people"]:
-        insert_raw(row)
+    for i, row in enumerate(data["people"]):
+        insert_raw(i, row)
+    client.command(f"OPTIMIZE TABLE {CLICKHOUSE_RAW_TABLE} FINAL;")
