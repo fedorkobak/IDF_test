@@ -8,3 +8,18 @@ services:
       - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
     ports:
       - ${CLICKHOUSE_HTTP_PORT}:8123
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    depends_on:
+      - click
+    environment:
+      - CLICKHOUSE_HOST=click
+      - CLICKHOUSE_HTTP_PORT=8123
+      - CLICKHOUSE_USER=${CLICKHOUSE_USER}
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
+    command:
+      - sh
+      - -c
+      - python src/load_data.py && dbt run --project-dir IDF_dbt --profiles-dir IDF_dbt
