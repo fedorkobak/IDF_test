@@ -4,5 +4,7 @@ version = "0.0.0"
 dependencies = [
     "python-dotenv==1.2.2",
     "requests==2.32.5",
-    "clickhouse-connect==0.13.0"
+    "clickhouse-connect==0.13.0",
+    "dbt-core==1.11.7",
+    "dbt-clickhouse==1.10.0"
 ]
