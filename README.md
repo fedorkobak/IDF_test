@@ -4,7 +4,7 @@ The test task from IFD technology.
 
 Check:
 
-- [The clickhouse configuration in](docker-compose.yml#L2-10).
+- [The clickhouse configuration](docker-compose.yml#L2-10).
 - Python script for loading information and publishing to DB [`load_data.py`](src/load_data.py).
 - The database initialisation:
     - [Deduplication strategy](src/sql_scripts/database.sql#L5).
