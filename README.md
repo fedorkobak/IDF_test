@@ -7,7 +7,7 @@ Check:
 - [The clickhouse configuration in](docker-compose.yml#L2-10).
 - Python script for loading information and publishing to DB [`load_data.py`](src/load_data.py).
 - The database initialisation:
-    - [Deduplication strategy](src/sql_scripts/database.sql#L13-14).
+    - [Deduplication strategy](src/sql_scripts/database.sql#L5).
     - [Materialized view for json parsing](src/sql_scripts/database.sql#L16-22).
 - [DBT models](IDF_dbt/models).
 
