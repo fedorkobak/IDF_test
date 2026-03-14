@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: astronauts_by_craft
+    columns:
+      - name: craft
+        data_tests:
+          - not_null
+          - unique
+      - name: astronaut_count
+        data_tests:
+          - not_null
+      - name: astronaut_names
+      - name: snapshot_loaded_at
+        data_tests:
+          - not_null

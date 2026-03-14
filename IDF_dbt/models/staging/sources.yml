@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: astronaut_api
+    schema: default
+    tables:
+      - name: people
+        columns:
+          - name: craft
+            data_tests:
+              - not_null
+          - name: name
+            data_tests:
+              - not_null
+          - name: _inserted_at
+            data_tests:
+              - not_null
